@@ -10,6 +10,7 @@ if __name__ == '__main__':
     file_dir = FileDir(path, file_view)
     
     print(file_dir.get_files())
+    print(file_dir.get_extensions())
     
     
     

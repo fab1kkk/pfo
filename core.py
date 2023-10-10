@@ -40,9 +40,11 @@ class FileDir:
         
     def get_extensions(self) -> list | None:
         extensions = []
-        files_in_dir = utils.get_files_from_dir(self.path_model.get_path())
+        files_in_dir = self.get_files()
         for f in files_in_dir:
             ext = utils.get_file_extension(f)
             extensions.append(ext)
+        
+        return extensions
         
         
