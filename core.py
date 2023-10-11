@@ -1,21 +1,21 @@
-from utils import type_allowed, get_files_from_dir, get_file_extension
+from utils import mode_allowed, get_files_from_dir, get_file_extension
 
-from configs import TYPES
+from configs import MODES
 
 
 class FileOrganizer:
-    def __init__(self, type: str): 
-        self._type = type
+    def __init__(self, mode: str): 
+        self._mode = mode
 
     @property
-    def type(self):
-        return self._type
+    def mode(self):
+        return self._mode
             
-    @type.setter
-    def type(self, newtype):
-        if not type_allowed(newtype):
-           raise Exception(f"Type must ba an allowed type.\nAllowed types:\n{TYPES}")
-        self._type = newtype.lower()
+    @mode.setter
+    def mode(self, newmode):
+        if not mode_allowed(newmode):
+           raise Exception(f"Type must ba an allowed type.\nAllowed types:\n{MODES}")
+        self._mode = newmode.lower()
         
     def organize(self):
         pass

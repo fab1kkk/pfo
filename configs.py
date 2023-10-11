@@ -1,4 +1,1 @@
-TYPES = [
-    'dirs',
-    'desktop'
-]
+MODES = ("dirs", "desktop")
