@@ -32,10 +32,10 @@ def get_file_extension(file : str) -> str | None:
         return None
     return extension
 
-def get_files_from_dir(path) -> list:
+def get_files_from_dir(path) -> list[str]:
     return os.listdir(path)
 
-def mode_allowed(mode: str):
+def mode_allowed(mode: str) -> bool:
     if not isinstance(mode, str):
         raise TypeError(f"type must be str type, {type(mode)} given")
     
