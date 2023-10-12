@@ -1,4 +1,5 @@
 from modes import BaseMode, DirsMode, DesktopMode
+
 mode_classes = {
     'dirs': DirsMode(),
     'desktop' : DesktopMode(),

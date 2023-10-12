@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 class PFOView:
     """A utility class for handling file organization input and output.
 
@@ -14,42 +16,31 @@ class PFOView:
     def display_message(message):
         print(message)
 
-
-class UI:
+class UInterface(ABC):
     def __init__(self, mode_instance):
-        self.mode_instance = mode_instance
-        self.running = True
-        self.selected = None
-    
-    def stop(self):
-        self.running = False
+        self.mode = mode_instance
+        self.greet()
         
-    def run(self):
-        self.map_UI()
+    def greet(self):
+        print(f"Mode on: {self.mode}")
+        
+    @abstractmethod
+    def show():
+        pass
 
-    def map_UI(self):
-        if self.mode_instance.mode == 'dirs':
-            self.show_dirs_ui()
-        else:
-            raise ValueError(f"UI not found for {self.mode_instance}")
+class DirsModeUI(UInterface):
+    def show(self):
+        while True:
+            print(f"Main Menu:")
+            print("1. Create empty directories in given path based on its files extension")
+            print("2. Organize directory.")
+            print("Q. Quit")
             
-    def show_dirs_ui(self):
-        while self.running:
-            print(
-                f"""
-Currently in {self.mode_instance}.
-
-Select what you want to do. You can select multiple options at once.
-[1] Create directories based on file extensions within the directory.
-[2] Create blab blaba
-[3] Create blab blaba
-[4] Create blab blaba
-[5] Create blab blaba
-"""
-            )
-            option = input("What you want to do. Q to exit.\nOption: ")
+            option = input("Enter your option: ")
             
-            if option.lower() == "q":
-                self.stop()
+            if option == "Q".lower():
+                print("Goodbye!")
+                return False
             else:
-                self.mode_instance.handle_selected_option(option)
+                option = int(option)
+                self.mode.handle_selected_option(option)
