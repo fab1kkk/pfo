@@ -31,7 +31,7 @@ def get_file_extension(file: str) -> str | None:
 
     extension = file.split(".")[-1]
     if extension == file:
-        return None
+        return 'no_filetype'
     return extension
 
 
@@ -69,7 +69,7 @@ def mode_allowed(
 
     Parameters:
     mode (str): A string representing the mode to be checked.
-    allowed_modes (Union[list[str], tuple[str], set[str]]): 
+    allowed_modes (Union[list[str], tuple[str], set[str]]):
     An iterable (e.g., list, tuple, or set) of allowed modes.
 
     Returns:
@@ -95,3 +95,7 @@ def mode_allowed(
         raise TypeError("allowed_modes must be an iterable containing strings")
 
     return True if mode.lower() in allowed_modes else False
+
+
+def create_dir(path: str, suffix: str = "s"):
+    os.mkdir(path=path)

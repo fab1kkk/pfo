@@ -1,16 +1,8 @@
-from core import (
-    FileDir, 
-    FileView,
-    PathModel
-)
+import sys
+
+from pfo import PFO
 
 if __name__ == '__main__':
-    path = PathModel()
-    file_view = FileView()
-    file_dir = FileDir(path, file_view)
-    
-    print(file_dir.get_files())
-    print(file_dir.get_extensions())
-    
-    
-    
+    pfo = PFO()
+    pfo.init_mode('dirs')
+    pfo.organize()
