@@ -39,10 +39,21 @@ class BaseMode(ABC):
     @abstractmethod
     def display_UI(self):
         pass
+    
+    @abstractmethod
+    def handle_selected_option(self, option: int):
+        pass
                 
 class DirsMode(BaseMode):
     def display_UI(self):
-        UI.dirs()
+        ui = UI(self)
+        ui.run()
+        
+    def handle_selected_option(self, option):
+        if option == '1':
+            self.create_dirs_from_extensions()
+        if option == '2':
+            print("selected 2 option")
     
     def create_dirs_from_extensions(self):
         source_dir = PFOView.ask_for_directory()
@@ -57,4 +68,7 @@ class DirsMode(BaseMode):
 class DesktopMode(BaseMode):
     def display_UI(self):
         print("""THIS IS UI FOR DesktopMode""")
+        
+    def handle_selected_option(self, option: int):
+        pass
         
