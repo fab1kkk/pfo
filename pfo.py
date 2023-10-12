@@ -37,11 +37,6 @@ class BasePFO:
         return True
 
 class PFO(BasePFO):
-    def get_files(self):
-        path = PFOView.ask_for_directory()
-        files = get_files_from_dir(path)
-        return files
-
     def organize(self):
         if self.mode is None:
             raise ValueError(

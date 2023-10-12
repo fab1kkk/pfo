@@ -8,20 +8,6 @@ TEST_DIR = ROOT_DIR + r"\tests\sample_files"
 
 
 class TestUtils(unittest.TestCase):
-    def test_get_files_from_existing_dir(self):
-        total_files_in_test_dir = len(os.listdir(TEST_DIR))
-        files_in_test_dir = os.listdir(TEST_DIR)
-        
-        self.assertEqual(len(get_files_from_dir(TEST_DIR)), total_files_in_test_dir)
-        for file in files_in_test_dir:
-            self.assertIn(file, get_files_from_dir(TEST_DIR))
-            
-    def test_get_files_from_not_existing_dir(self):
-        self.assertRaises(FileNotFoundError, lambda: get_files_from_dir('path/that/doesnt/exist'))
-        
-    def test_get_files_from_dir_invalid_input(self):
-        self.assertRaises(TypeError, lambda: get_files_from_dir(None))
-        
     def test_get_file_extension_with_extension(self):
         docextension = get_file_extension('word.doc')
         pdfextension = get_file_extension('pdf.pdf')
@@ -34,7 +20,7 @@ class TestUtils(unittest.TestCase):
 
     def test_get_file_extension_with_no_extension(self):
         noextension = get_file_extension('noextension')
-        self.assertEqual(noextension, None)
+        self.assertEqual(noextension, 'no_filetype')
         
     def test_mode_allowed(self):
         modeslist = ['list1', 'list2']

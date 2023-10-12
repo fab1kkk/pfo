@@ -35,32 +35,6 @@ def get_file_extension(file: str) -> str | None:
     return extension
 
 
-def get_files_from_dir(path: str) -> list[str]:
-    """
-    Get a list of files in the specified directory.
-
-    Parameters:
-    path (str): A string representing the directory path.
-
-    Returns:
-    list[str]: A list of file names in the directory.
-
-    Raises:
-    TypeError: If the 'path' parameter is not of type str.
-    FileNotFoundError: If the specified path is not found.
-
-    Example:
-    >>> get_files_from_dir("/path/to/directory")
-    ['file1.txt', 'file2.jpg']
-    """
-    if not isinstance(path, str):
-        raise TypeError(f"type must be str type, {type(path)} given")
-    try:
-        return os.listdir(path)
-    except FileNotFoundError as e:
-        raise e
-
-
 def mode_allowed(
     mode: str, allowed_modes: Union[list[str], tuple[str], set[str]]
 ) -> bool:
@@ -95,7 +69,3 @@ def mode_allowed(
         raise TypeError("allowed_modes must be an iterable containing strings")
 
     return True if mode.lower() in allowed_modes else False
-
-
-def create_dir(path: str, suffix: str = "s"):
-    os.mkdir(path=path)

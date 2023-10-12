@@ -1,8 +1,6 @@
 import os
 from utils import (
     get_file_extension,
-    get_files_from_dir,
-    create_dir,
 )
 
 from views import PFOView
@@ -13,6 +11,8 @@ class BaseMode:
     
     def organize(self):
         pass
+    
+    
     
 class DirsMode(BaseMode):
     def organize(self):
