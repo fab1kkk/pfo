@@ -1,1 +1,1 @@
-MODES = ("dirs", "desktop")
+ALLOWED_MODES = ("dirs", "desktop")

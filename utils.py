@@ -1,7 +1,4 @@
-import os
 from typing import Union
-
-from configs import MODES
 
 
 def get_file_extension(file: str) -> str | None:
