@@ -1,4 +1,4 @@
-from mode_factory import ModeFactory
+from factory import ModeFactory
 
 class PFO:
     def __init__(self):

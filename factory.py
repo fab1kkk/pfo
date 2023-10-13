@@ -1,10 +1,8 @@
 from mode import Mode, DirsMode
-from ui import UI, DirsModeUI
 
 mode_classes = {
     'dirs': DirsMode()
 }
-
 
 class ModeFactory:
     @staticmethod

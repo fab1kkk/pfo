@@ -8,12 +8,12 @@ from utils import (
 from config import ALLOWED_MODES
 from ui import DirsModeUI
 
-
 class Mode(ABC):
     _allowed_modes = ALLOWED_MODES
 
     def __init__(self):
         self._mode = None
+        self._ui = None
         
     def __str__(self):
         return self._mode
@@ -48,10 +48,6 @@ class Mode(ABC):
         return False
 
 class DirsMode(Mode):
-    def __init__(self):
-        super().__init__()
-        self.ui = None
-        
     def display_UI(self):
         self.ui = DirsModeUI(self)
         self.ui.show()

@@ -2,7 +2,6 @@ import logging
 
 ALLOWED_MODES = ("dirs", "desktop")
 
-
 def setup_logger():
     logging.basicConfig(
         level=logging.DEBUG,

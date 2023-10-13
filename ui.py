@@ -29,8 +29,6 @@ class UI(ABC):
     def print_success(self, content):
         print(f"\033[92m{content}\033[0m")
 
-
-
 class DirsModeUI(UI):
     def show(self):
         while True:
@@ -53,3 +51,5 @@ class DirsModeUI(UI):
                     dir = self.ask_for_dir_path()
                     overwrite = self.ask_for_overwrite_choice()
                     self.mode.handle_selected_option(option, dir=dir, overwrite = overwrite)
+                elif option == 2:
+                    self.mode.handle_selected_option(option)

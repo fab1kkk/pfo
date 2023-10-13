@@ -1,9 +1,6 @@
 import unittest
-import os
 
 from utils import *
-
-
 
 class TestUtils(unittest.TestCase):
     def test_get_file_extension_with_extension(self):
