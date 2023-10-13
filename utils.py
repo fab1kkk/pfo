@@ -4,17 +4,10 @@ import os
 def get_file_extension(file: str) -> str:
     """
     Extracts and returns the file extension from a given file name or path.
-
-    Returns:
-    str : The extracted file extension if found, or 'no_filetype' if the input
-                string does not contain a valid file extension.
     """
     
     if not isinstance(file, str):
         raise TypeError(f"file must be str type, {type(file)} given")
-    
-    if not os.path.isfile(file):
-        return None
     
     extension = file.split(".")[-1]
     if extension == file:

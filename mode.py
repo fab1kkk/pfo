@@ -53,20 +53,28 @@ class DirsMode(Mode):
 
     def handle_selected_option(self, option: int) -> bool:
         options = {
-            1: self.create_dirs_from_extensions,
+            1: self.create_dirs_from_file_extensions,
             2: self.move_files_to_dirs,
         }
         return super().handle_selected_option(option, options)
 
-    def create_dirs_from_extensions(self):
+    def create_dirs_from_file_extensions(self):
         dir = interaction.ask_for_dir_path()
-        dir_files= os.listdir(dir)
-        file_extensions = set(get_file_extension(os.path.join(dir,file)) for file in dir_files)
+        dir_items = os.listdir(dir)
+        
+        dir_files = []
+        for item in dir_items:
+            file = os.path.join(dir, item)
+            
+            if os.path.isfile(file):
+                dir_files.append(file)
+                
+        file_extensions = set(get_file_extension(file) for file in dir_files)
         for extension in file_extensions:
             if extension:
-                dir_path = os.path.join(dir, extension)
-                os.makedirs(dir_path, exist_ok=True)
-                interaction.print_success(f"created -> {dir_path}")
+                created_file = os.path.join(dir, extension)
+                os.makedirs(created_file)
+                interaction.print_success(f"created -> {created_file}")
                 
     def move_files_to_dirs(self):
         interaction.print_success("One day it will work")
