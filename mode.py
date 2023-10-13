@@ -6,8 +6,8 @@ from utils import (
     mode_allowed,
 )
 from config import ALLOWED_MODES
-import ask
-from ui import DirsModeUI
+import ui
+import interaction
 
 
 class Mode(ABC):
@@ -50,8 +50,8 @@ class Mode(ABC):
 
 class DirsMode(Mode):
     def display_UI(self):
-        ui = DirsModeUI(self)
-        ui.show()
+        _ui = ui.DirsModeUI(self)
+        _ui.show()
 
     def handle_selected_option(self, option: int):
         options = {
@@ -60,15 +60,14 @@ class DirsMode(Mode):
         self.call_handled_option(option, options)
 
     def create_dirs_from_extensions(self):
-        dir = ask.for_dir_path()
+        dir = interaction.ask_for_dir_path()
         dir_files= os.listdir(dir)
-
         file_extensions = set(get_file_extension(os.path.join(dir,file)) for file in dir_files)
-
         for extension in file_extensions:
             if extension:
                 dir_path = os.path.join(dir, extension)
                 os.makedirs(dir_path, exist_ok=True)
+                interaction.print_success(f"created -> {dir_path}")
 
 
 class DesktopMode(Mode):
