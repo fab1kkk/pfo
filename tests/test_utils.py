@@ -13,10 +13,12 @@ class TestUtils(unittest.TestCase):
         pdfextension = get_file_extension('pdf.pdf')
         excelextension = get_file_extension('excel.xlsx')
         txtextension = get_file_extension('txt.txt')
+        samplepath = get_file_extension(r'here\random\path\file.ext')
         self.assertEqual(docextension, 'doc')
         self.assertEqual(pdfextension, 'pdf')
         self.assertEqual(excelextension, 'xlsx')
         self.assertEqual(txtextension, 'txt')
+        self.assertEqual(samplepath, 'ext')
 
     def test_get_file_extension_with_no_extension(self):
         noextension = get_file_extension('noextension')

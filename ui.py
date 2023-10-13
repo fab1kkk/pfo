@@ -11,6 +11,17 @@ class UInterface(ABC):
     @abstractmethod
     def show():
         pass
+    
+    def ask_for_overwrite_choice(self, positive = 'y', negative = 'n'):
+        while True:
+            answer = input(f"Do you want to overwrite existing files? ({positive}/{negative}): ")
+            answer = answer.lower()
+            if answer == positive:
+                return True
+            elif answer == negative:
+                return False
+            else:
+                print(f"Invalid choice. Please enter '{positive}' or '{negative}'.")
 
 class DirsModeUI(UInterface):
     def show(self):
@@ -29,4 +40,7 @@ class DirsModeUI(UInterface):
                 except Exception as e:
                     print(f"An error occured: {str(e)}")
                     continue
-                self.mode.handle_selected_option(option)
+                
+                if option == 1:
+                    overwrite = self.ask_for_overwrite_choice()
+                    self.mode.handle_selected_option(option, overwrite = overwrite)

@@ -38,10 +38,10 @@ class Mode(ABC):
     def display_UI(self):
         pass
 
-    def handle_selected_option(self, option: int, options : dict) -> bool:
+    def handle_selected_option(self, option: int, options : dict, *args, **kwargs) -> bool:
         _call = options.get(option)
         if _call:
-            _call()
+            _call(*args, **kwargs)
             return True
         return False
                 
@@ -51,14 +51,14 @@ class DirsMode(Mode):
         _ui = ui.DirsModeUI(self)
         _ui.show()
 
-    def handle_selected_option(self, option: int) -> bool:
+    def handle_selected_option(self, option: int, *args, **kwargs) -> bool:
         options = {
             1: self.create_dirs_from_file_extensions,
             2: self.move_files_to_dirs,
         }
-        return super().handle_selected_option(option, options)
+        return super().handle_selected_option(option=option, options=options, *args, **kwargs)
 
-    def create_dirs_from_file_extensions(self):
+    def create_dirs_from_file_extensions(self, overwrite = False):
         dir = interaction.ask_for_dir_path()
         dir_items = os.listdir(dir)
         
@@ -73,7 +73,7 @@ class DirsMode(Mode):
         for extension in file_extensions:
             if extension:
                 created_file = os.path.join(dir, extension)
-                os.makedirs(created_file)
+                os.makedirs(created_file, exist_ok=overwrite)
                 interaction.print_success(f"created -> {created_file}")
                 
     def move_files_to_dirs(self):
