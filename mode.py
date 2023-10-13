@@ -38,26 +38,25 @@ class Mode(ABC):
     def display_UI(self):
         pass
 
-    @abstractmethod
-    def handle_selected_option(self, option: int):
-        pass
-    
-    def call_handled_option(self, option, options):
+    def handle_selected_option(self, option: int, options : dict) -> bool:
         _call = options.get(option)
         if _call:
             _call()
-
+            return True
+        return False
+                
 
 class DirsMode(Mode):
     def display_UI(self):
         _ui = ui.DirsModeUI(self)
         _ui.show()
 
-    def handle_selected_option(self, option: int):
+    def handle_selected_option(self, option: int) -> bool:
         options = {
             1: self.create_dirs_from_extensions,
+            2: self.move_files_to_dirs,
         }
-        self.call_handled_option(option, options)
+        return super().handle_selected_option(option, options)
 
     def create_dirs_from_extensions(self):
         dir = interaction.ask_for_dir_path()
@@ -68,7 +67,9 @@ class DirsMode(Mode):
                 dir_path = os.path.join(dir, extension)
                 os.makedirs(dir_path, exist_ok=True)
                 interaction.print_success(f"created -> {dir_path}")
-
+                
+    def move_files_to_dirs(self):
+        interaction.print_success("One day it will work")
 
 class DesktopMode(Mode):
     def display_UI(self):
