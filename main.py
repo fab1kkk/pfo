@@ -1,6 +1,4 @@
-from pfo import PFO
+from cli import cli
 
-if __name__ == '__main__':
-    pfo = PFO()
-    pfo.init_mode('DIRS')
-    pfo.run()
+if __name__ == "__main__":
+    cli()

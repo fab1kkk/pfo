@@ -5,15 +5,15 @@ from utils import (
     get_file_extension,
     mode_allowed,
 )
-from configs import ALLOWED_MODES
-from views import PFOView, DirsModeUI
+from config import ALLOWED_MODES
+import ask
+from ui import DirsModeUI
 
 
-class BaseMode(ABC):
+class Mode(ABC):
+    _allowed_modes = ALLOWED_MODES
     def __init__(self):
         self._mode = None
-        self._allowed_modes = ALLOWED_MODES
-        self._initialized = False
 
     def __str__(self):
         return self._mode
@@ -25,7 +25,6 @@ class BaseMode(ABC):
                 f"Invalid mode. Allowed modes: {self.allowed_modes}, given '{mode}'"
             )
         self._mode = mode
-        self._initialized = True
 
     @property
     def mode(self):
@@ -35,10 +34,6 @@ class BaseMode(ABC):
     def allowed_modes(self):
         return self._allowed_modes
 
-    @property
-    def initialized(self):
-        return self._initialized
-
     @abstractmethod
     def display_UI(self):
         pass
@@ -46,9 +41,14 @@ class BaseMode(ABC):
     @abstractmethod
     def handle_selected_option(self, option: int):
         pass
+    
+    def call_handled_option(self, option, options):
+        _call = options.get(option)
+        if _call:
+            _call()
 
 
-class DirsMode(BaseMode):
+class DirsMode(Mode):
     def display_UI(self):
         ui = DirsModeUI(self)
         ui.show()
@@ -56,28 +56,22 @@ class DirsMode(BaseMode):
     def handle_selected_option(self, option: int):
         options = {
             1: self.create_dirs_from_extensions,
-            2: self.say_hello,
         }
-
-        to_call = options.get(option)
-        if to_call:
-            to_call()
-    
-    def say_hello(self):
-        print('hello')
+        self.call_handled_option(option, options)
 
     def create_dirs_from_extensions(self):
-        source_dir = PFOView.ask_for_directory()
-        source_dir_files = os.listdir(source_dir)
+        dir = ask.for_dir_path()
+        dir_files= os.listdir(dir)
 
-        new_dirs = set(get_file_extension(file) for file in source_dir_files)
+        file_extensions = set(get_file_extension(os.path.join(dir,file)) for file in dir_files)
 
-        for new_dir in new_dirs:
-            dir_path = os.path.join(source_dir, new_dir)
-            os.makedirs(dir_path)
+        for extension in file_extensions:
+            if extension:
+                dir_path = os.path.join(dir, extension)
+                os.makedirs(dir_path, exist_ok=True)
 
 
-class DesktopMode(BaseMode):
+class DesktopMode(Mode):
     def display_UI(self):
         pass
 
