@@ -1,5 +1,4 @@
 from typing import Union
-import os
 
 def get_file_extension(file: str) -> str:
     """

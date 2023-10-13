@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class UInterface(ABC):
+class UI(ABC):
     def __init__(self, mode_instance):
         self.mode = mode_instance
         self.greet()
@@ -22,8 +22,16 @@ class UInterface(ABC):
                 return False
             else:
                 print(f"Invalid choice. Please enter '{positive}' or '{negative}'.")
+    
+    def ask_for_dir_path(self):
+        return input("Enter the directory path: ")
+    
+    def print_success(self, content):
+        print(f"\033[92m{content}\033[0m")
 
-class DirsModeUI(UInterface):
+
+
+class DirsModeUI(UI):
     def show(self):
         while True:
             print("Main Menu:")
@@ -42,5 +50,6 @@ class DirsModeUI(UInterface):
                     continue
                 
                 if option == 1:
+                    dir = self.ask_for_dir_path()
                     overwrite = self.ask_for_overwrite_choice()
-                    self.mode.handle_selected_option(option, overwrite = overwrite)
+                    self.mode.handle_selected_option(option, dir=dir, overwrite = overwrite)

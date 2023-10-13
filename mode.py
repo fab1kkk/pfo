@@ -6,15 +6,15 @@ from utils import (
     mode_allowed,
 )
 from config import ALLOWED_MODES
-import ui
-import interaction
+from ui import DirsModeUI
 
 
 class Mode(ABC):
     _allowed_modes = ALLOWED_MODES
+
     def __init__(self):
         self._mode = None
-
+        
     def __str__(self):
         return self._mode
 
@@ -38,50 +38,55 @@ class Mode(ABC):
     def display_UI(self):
         pass
 
-    def handle_selected_option(self, option: int, options : dict, *args, **kwargs) -> bool:
+    def handle_selected_option(
+        self, option: int, options: dict, *args, **kwargs
+    ) -> bool:
         _call = options.get(option)
         if _call:
             _call(*args, **kwargs)
             return True
         return False
-                
 
 class DirsMode(Mode):
+    def __init__(self):
+        super().__init__()
+        self.ui = None
+        
     def display_UI(self):
-        _ui = ui.DirsModeUI(self)
-        _ui.show()
-
+        self.ui = DirsModeUI(self)
+        self.ui.show()
+        
     def handle_selected_option(self, option: int, *args, **kwargs) -> bool:
         options = {
             1: self.create_dirs_from_file_extensions,
             2: self.move_files_to_dirs,
         }
-        return super().handle_selected_option(option=option, options=options, *args, **kwargs)
+        return super().handle_selected_option(
+            option=option, options=options, *args, **kwargs
+        )
 
-    def create_dirs_from_file_extensions(self, overwrite = False):
-        dir = interaction.ask_for_dir_path()
-        dir_items = os.listdir(dir)
-        
+    def create_dirs_from_file_extensions(self, dir, overwrite=False):
         dir_files = []
-        for item in dir_items:
+        for item in os.listdir(dir):
             file = os.path.join(dir, item)
-            
+
             if os.path.isfile(file):
                 dir_files.append(file)
-                
+
         file_extensions = set(get_file_extension(file) for file in dir_files)
         for extension in file_extensions:
             if extension:
                 created_file = os.path.join(dir, extension)
                 os.makedirs(created_file, exist_ok=overwrite)
-                interaction.print_success(f"created -> {created_file}")
-                
-    def move_files_to_dirs(self):
-        interaction.print_success("One day it will work")
+                self.ui.print_success(f"created -> {created_file}")
 
-class DesktopMode(Mode):
+    def move_files_to_dirs(self):
+        self.ui.print_success("One day it will work")
+
+
+class AnotherMode(Mode):
     def display_UI(self):
         pass
-
     def handle_selected_option(self, option: int):
         pass
+    

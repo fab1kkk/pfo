@@ -1,9 +1,10 @@
-from mode import Mode, DirsMode, DesktopMode
+from mode import Mode, DirsMode
+from ui import UI, DirsModeUI
 
 mode_classes = {
-    'dirs': DirsMode(),
-    'desktop' : DesktopMode(),
+    'dirs': DirsMode()
 }
+
 
 class ModeFactory:
     @staticmethod
@@ -19,3 +20,4 @@ class ModeFactory:
             raise ValueError(f"Invalid mode: {mode}")
         
         return mapped_mode
+    

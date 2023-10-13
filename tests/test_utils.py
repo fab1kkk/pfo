@@ -3,8 +3,6 @@ import os
 
 from utils import *
 
-ROOT_DIR = os.getcwd()
-TEST_DIR = ROOT_DIR + r"\tests\sample_files"
 
 
 class TestUtils(unittest.TestCase):
